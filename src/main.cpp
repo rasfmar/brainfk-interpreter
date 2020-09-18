@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
 
 void help() {
-    std::cout << "usage: ./a sourcecode" << std::endl;
+    std::cout << "usage: ./bf fileName.bf" << std::endl;
 }
 
 static unsigned int amountOfMemory = 0xffff;
 
-int exec(const char *src) {
+int exec(std::string src) {
     char memory[amountOfMemory];
     memset(memory, 0, amountOfMemory);
     
@@ -14,7 +14,7 @@ int exec(const char *src) {
     unsigned int index = 0;
     char c = '\0';
 
-    for (; index < strlen(src); index++) {
+    for (; index < src.length(); index++) {
         switch (src[index]) {
         case '>':
             ptr++;
@@ -41,7 +41,7 @@ int exec(const char *src) {
                 unsigned int lvl = 0;
 
                 // find the ]
-                for (unsigned int i = index + 1; i < strlen(src); i++) {
+                for (unsigned int i = index + 1; i < src.length(); i++) {
                     if (src[i] == '[') {
                         lvl++;
                     } else if (src[i] == ']') {
@@ -102,15 +102,14 @@ int main(int argc, char **argv) {
         help();
         return 1;
     } else {
-        const char *src = (const char*)(argv[1]);
+        std::ifstream t(argv[1]);
+        std::stringstream buffer;
+        buffer << t.rdbuf();
 
-        if (exec(src)) {
-            std::cout << std::endl << "Program terminated" << std::endl;
-            return 0;
-        } else {
-            std::cout << std::endl << "An error occurred" << std::endl;
-            return 1;
-        }
+        int result = exec(buffer.str());
+        std::cout << std::endl;
+
+        return result;
     }
 }
 

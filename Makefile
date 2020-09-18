@@ -4,7 +4,7 @@ TARGET_EXEC ?= bf
 BUILD_DIR ?= ./dist
 SRC_DIRS ?= ./src
 
-CC = clang++
+CC = g++
 
 SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
